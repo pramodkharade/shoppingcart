@@ -1,0 +1,23 @@
+{
+  "name": "shoppingcart",
+  "version": "1.0.0",
+  "description": "Nodejs E-commcerce website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pramodkharade/shoppingcart.git"
+  },
+  "author": "Pramod Kharade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pramodkharade/shoppingcart/issues"
+  },
+  "homepage": "https://github.com/pramodkharade/shoppingcart#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1"
+  }
+}
