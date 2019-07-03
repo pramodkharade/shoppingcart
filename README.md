@@ -15,4 +15,6 @@ npm install --save ejs
 
 npm install --save pug 
 
+official docs: https://pugjs.org/api/getting-started.html
+
 npm install --save express-handlebars
