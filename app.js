@@ -14,7 +14,8 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use('/admin',adminData.router);
 app.use(shopRoutes);
 app.use((req,res,next)=>{
-    res.status(404).sendFile(path.join(rootDir,'views','404.html'));
+    //res.status(404).sendFile(path.join(rootDir,'views','404.html'));
+    res.status(404).render('404',{pageTitle:'Page Not found'})
 });
 app.listen(port,()=>{
     console.log('Server is running on ',port);
