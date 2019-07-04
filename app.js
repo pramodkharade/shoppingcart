@@ -5,7 +5,9 @@ const rootDir = require('./utils/path');
 const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const app = express();
-app.set('view engine','pug');
+//app.engine('hbs',expressHbs());
+app.set('view engine','ejs');
+ //app.set('view engine','pug');
 app.set('views','views');
 const port  = process.env.PORT || 5000;
 
