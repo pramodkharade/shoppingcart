@@ -1,23 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title> <%=pageTitle %> </title>
-    <meta name="description" content="The HTML5 Herald">
-    <meta name="author" content="SitePoint">
-    <link rel="stylesheet" href="/css/main.css">
+<%- include('includes/header.ejs') %>
 </head>
 <body>
-    <header class="main-header">
-        <nav class="main-header__nav">
-            <ul class="main-header__item-list">
-                <li class="main-header__item"><a class="active" href="/">Shop</a></li>
-                <li class="main-header__item"><a href="/admin/add-product">Add Product</a></li>
-            </ul>
-        </nav>
-    </header>
+        <%- include('includes/navigation.ejs') %>
     <main>
         <h1>Page not found</h1>
     </main>
-</body>
-</html>
+    <%- include('includes/footer.ejs') %>
