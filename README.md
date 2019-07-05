@@ -13,6 +13,8 @@ npm i nodemon
 
 npm install --save ejs 
 
+https://ejs.co/#docs
+
 npm install --save pug 
 
 official docs: https://pugjs.org/api/getting-started.html
