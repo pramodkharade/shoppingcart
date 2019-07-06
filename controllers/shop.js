@@ -19,7 +19,7 @@ exports.getIndex = (req,res,next)=>{
           path:'/'
         });
     });
-}
+};
 
 exports.getCart = (req,res,next)=>{
     res.render('shop/cart',
@@ -27,11 +27,17 @@ exports.getCart = (req,res,next)=>{
         path:'/cart',
         pageTitle:'Your Cart'
     });
-}
+};
 
 exports.getCheckout = (req,res,next)=>{
     res.render('shop/checkout',{
         path:"/checkout",
         pageTitle:'Checkout'
     });
-}
+};
+exports.getOrders = (req,res,next)=>{
+    res.render('shop/orders',{
+        path:"/orders",
+        pageTitle:'Orders'
+    });
+};
