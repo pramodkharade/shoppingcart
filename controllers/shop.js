@@ -28,6 +28,10 @@ exports.getIndex = (req,res,next)=>{
     });
 };
 
+exports.postCart = (req,res,next)=>{
+    const prodId = req.body.productId;
+    res.redirect('/cart');
+}
 exports.getCart = (req,res,next)=>{
     res.render('shop/cart',
     {
