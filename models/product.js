@@ -42,10 +42,8 @@ module.exports = class Product {
         });
     }
     static deleteById(id){
-        console.log('ID Is:',id);
         getProductsFromFile((products)=>{
             const product = products.find(prod=> prod.id === id);
-            console.log('product Is:',product);
             const updatedProduct = products.filter(p=> p.id !== id);
             fs.writeFile(filepath,JSON.stringify(updatedProduct),(error)=>{
                 if(!error){
