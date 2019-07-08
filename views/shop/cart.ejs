@@ -3,6 +3,19 @@
 
 <body>
         <%- include('../includes/navigation.ejs') %>
-
+    <% if(products.length > 0) { %>
+        <ul>
+            <% products.forEach(p=>{ %>
+                <li>
+                <p><%= p.productData.title %>(<%= p.qty %>)</p>
+                <form action="/cart-delete-item" method="post">
+                    <button type="submit" class="btn">Delete</button>
+                </form>
+                </li>
+            <% }) %>
+        </ul>
+    <% }else {%>
+        <h1> No products in  cart!</h1>
+    <% } %>
 
     <%- include('../includes/footer.ejs') %>
