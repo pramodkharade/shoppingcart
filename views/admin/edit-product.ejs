@@ -7,24 +7,26 @@
         <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <form class="product-form" action="/admin/add-product" method="POST">
+        <form class="product-form" action="/admin/<% if(editing) { %>edit-product<% } else {%>add-product<% } %>" method="POST">
             <div class="form-control">
                 <label for="title">Title</label>
-                <input type="text" name="title" id="title">
+                <input type="text" name="title" id="title" value="<% if(editing) { %><%=product.title%> <% }%>">
             </div>
             <div class="form-control">
                     <label for="imageUrl">Image Url</label>
-                    <input type="text" name="imageUrl" id="imageUrl">
+                    <input type="text" name="imageUrl" id="imageUrl" value="<% if(editing) { %><%=product.imageUrl%> <% }%>">
             </div>
             <div class="form-control">
                     <label for="price">Price</label>
-                    <input type="number" step="0.01" name="price" id="price">
+                    <input type="number" step="0.01" name="price" id="price" value="<% if(editing) { %><%=product.price %><% }%>">
             </div>
             <div class="form-control">
                     <label for="description">Description</label>
-                    <textarea name="description" id="description" row="5"></textarea>
+                    <textarea name="description" id="description" row="5">
+                        <% if(editing) { %><%=product.description %> <% }%>
+                    </textarea>
             </div>
-            <button class="btn" type="submit">Add Product</button>
+            <button class="btn" type="submit"><% if(editing){ %>Update Product<% }else{ %>Add Product<% } %></button>
         </form>
     </main>
     <%- include('../includes/footer.ejs') %>
