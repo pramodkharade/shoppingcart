@@ -20,3 +20,7 @@ npm install --save pug
 official docs: https://pugjs.org/api/getting-started.html
 
 npm install --save express-handlebars
+
+# install mysql2 package
+
+npm i --save mysql2
