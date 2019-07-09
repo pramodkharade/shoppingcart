@@ -20,14 +20,19 @@ exports.getProduct = (req, res, next) => {
 }
 
 exports.getIndex = (req, res, next) => {
-    Product.fetchAll((products) => {
-        res.render('shop/index',
-            {
-                prods: products,
-                pageTitle: 'Home',
-                path: '/'
-            });
-    });
+    Product.fetchAll()
+        .then(([rows, fieldsData]) => {
+            console.log("Rows:",rows);
+            res.render('shop/index',
+                {
+                    prods: rows,
+                    pageTitle: 'Home',
+                    path: '/'
+                });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 };
 
 exports.postCart = (req, res, next) => {

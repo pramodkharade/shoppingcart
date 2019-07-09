@@ -10,8 +10,14 @@ const app = express();
 app.set('view engine','ejs');
  //app.set('view engine','pug');
 app.set('views','views');
-const port  = process.env.PORT || 3000;
-db.execute('');
+const port  = process.env.PORT || 4000;
+db.execute('select * from products')
+    .then((result)=>{
+        console.log(result[0]);
+    })
+    .catch((error)=>{
+        console.log(error);
+    });
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname,'public')));
 app.use('/admin',adminRouter.router);
