@@ -29,7 +29,7 @@ app.use((req,res,next)=>{
 });
 sequelize.sync()
     .then((result)=>{
-        console.log(result);
+        console.log("Table created successfully");
     })
     .catch((error)=>{
         console.log('Sync:',error);
