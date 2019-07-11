@@ -18,16 +18,15 @@ exports.getProducts = (req, res, next) => {
 };
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId;
-    Product.findById(prodId)
-           .then(([product])=>{
-               console.log("Product of:",product[0]);
-            res.render('shop/product-details',
-            {  product: product[0],
-               pageTitle: product.title,
-               path: '/products' 
-           })
-           })
-           .catch(()=>{});
+    Product.findByPk(prodId)
+    .then(product => {
+      res.render('shop/product-details', {
+        product: product,
+        pageTitle: product.title,
+        path: '/products'
+      });
+    })
+    .catch(err => console.log(err));
 
 }
 
