@@ -23,6 +23,16 @@ const port  = process.env.PORT || 3000;
 //     });
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname,'public')));
+app.use((req,res,next)=>{
+    User.findByPk(1)
+    .then((user)=>{
+        req.user = user;
+        next();
+    })
+    .catch((error)=>{
+        console.log(error);
+    });
+});
 app.use('/admin',adminRouter.router);
 app.use(shopRoutes);
 app.use((req,res,next)=>{
@@ -32,9 +42,21 @@ app.use((req,res,next)=>{
 Product.belongsTo(User,{constraints:true,onDelete:'CASCADE'});
 User.hasMany(Product);
 
-sequelize.sync({force:true})
+sequelize
+//.sync({force:true})
+.sync()
     .then((result)=>{
         console.log("Table created successfully");
+        return User.findByPk(1);
+    })
+    .then((user)=>{
+        if(!user){
+           return  User.create({name:'Pramod',email:'kharade.pramod91@gmail.com'});
+        }
+        return user;
+    })
+    .then((user)=>{
+        console.log(user);
     })
     .catch((error)=>{
         console.log('Sync:',error);

@@ -28,3 +28,5 @@ npm i --save mysql2
 # install sequelize  library alternative to mysql2
 
 npm i --save sequelize
+
+http://docs.sequelizejs.com/manual/associations.html
