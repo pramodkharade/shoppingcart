@@ -6,12 +6,14 @@ const rootDir = require('./utils/path');
 const adminRouter = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const sequelize = require('./utils/database');
+const Product = require('./models/product');
+const User = require('./models/user');
 const app = express();
 //app.engine('hbs',expressHbs());
 app.set('view engine','ejs');
  //app.set('view engine','pug');
 app.set('views','views');
-const port  = process.env.PORT || 4000;
+const port  = process.env.PORT || 3000;
 // db.execute('select * from products')
 //     .then((result)=>{
 //         console.log(result[0]);
@@ -27,7 +29,10 @@ app.use((req,res,next)=>{
     //res.status(404).sendFile(path.join(rootDir,'views','404.html'));
     res.status(404).render('404',{pageTitle:'Page Not found',path:'/'})
 });
-sequelize.sync()
+Product.belongsTo(User,{constraints:true,onDelete:'CASCADE'});
+User.hasMany(Product);
+
+sequelize.sync({force:true})
     .then((result)=>{
         console.log("Table created successfully");
     })
