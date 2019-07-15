@@ -115,6 +115,30 @@ exports.postCartDeleteProduct = ((req, res, next) => {
             })
             .catch((error)=>{ console.log(error);});
 });
+exports.postOrder = (req,res,next)=>{
+        req.user.getCart()
+                .then((cart)=>{
+                    return cart.getProducts();
+                })
+                .then((products)=>{
+                    req.user.createOrder()
+                            .then((order)=>{
+                               return  order.addProducts(products.map(product=>{
+                                    product.orderItem = {quantity:product.cartItem.quantity};
+                                    return product;
+                                }));
+                            })
+                            .catch((error)=>{
+                                console.log(error);
+                            });
+                })
+                .then((result)=>{
+                    res.redirect('/orders');
+                })
+                .catch((error)=>{
+                    console.log(error);
+                });
+};
 exports.getCheckout = (req, res, next) => {
     res.render('shop/checkout', {
         path: "/checkout",
