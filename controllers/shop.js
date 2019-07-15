@@ -103,51 +103,61 @@ exports.getCart = (req, res, next) => {
 exports.postCartDeleteProduct = ((req, res, next) => {
     const prodId = req.body.productId;
     req.user.getCart()
-            .then((cart)=>{
-                return cart.getProducts({where:{id:prodId}});
-            })
-            .then((products)=>{
-                const product = products[0];
-                return product.cartItem. destroy();
-            })
-            .then((result)=>{
-                res.redirect('/cart');
-            })
-            .catch((error)=>{ console.log(error);});
+        .then((cart) => {
+            return cart.getProducts({ where: { id: prodId } });
+        })
+        .then((products) => {
+            const product = products[0];
+            return product.cartItem.destroy();
+        })
+        .then((result) => {
+            res.redirect('/cart');
+        })
+        .catch((error) => { console.log(error); });
 });
-exports.postOrder = (req,res,next)=>{
-        req.user.getCart()
-                .then((cart)=>{
-                    return cart.getProducts();
+exports.postOrder = (req, res, next) => {
+    let fetchCart;
+    req.user.getCart()
+        .then((cart) => {
+            fetchCart = cart;
+            return cart.getProducts();
+        })
+        .then((products) => {
+            req.user.createOrder()
+                .then((order) => {
+                    return order.addProducts(products.map(product => {
+                        product.orderItem = { quantity: product.cartItem.quantity };
+                        return product;
+                    }));
                 })
-                .then((products)=>{
-                    req.user.createOrder()
-                            .then((order)=>{
-                               return  order.addProducts(products.map(product=>{
-                                    product.orderItem = {quantity:product.cartItem.quantity};
-                                    return product;
-                                }));
-                            })
-                            .catch((error)=>{
-                                console.log(error);
-                            });
-                })
-                .then((result)=>{
-                    res.redirect('/orders');
-                })
-                .catch((error)=>{
+                .catch((error) => {
                     console.log(error);
                 });
+        })
+        .then((result) => {
+            fetchCart.setProducts(null);
+            res.redirect('/orders');
+        })
+        .then((result) => {
+            res.redirect('/orders');
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 };
-exports.getCheckout = (req, res, next) => {
-    res.render('shop/checkout', {
-        path: "/checkout",
-        pageTitle: 'Checkout'
-    });
-};
+
 exports.getOrders = (req, res, next) => {
-    res.render('shop/orders', {
-        path: "/orders",
-        pageTitle: 'Orders'
-    });
+    req.user
+    .getOrders({include: ['products']})
+        .then((orders) => {
+            res.render('shop/orders', {
+                path: "/orders",
+                pageTitle: 'Orders',
+                orders: orders
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
 };
