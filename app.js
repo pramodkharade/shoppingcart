@@ -10,6 +10,8 @@ const Product = require('./models/product');
 const User = require('./models/user');
 const Cart = require('./models/cart');
 const CartItem = require('./models/cart-item');
+const Order = require('./models/order');
+const OrderItem = require('./models/order-item');
 const app = express();
 //app.engine('hbs',expressHbs());
 app.set('view engine','ejs');
@@ -49,6 +51,12 @@ Cart.belongsTo(User);
 /***Cart to product Many to many M<===>M relationship ***/
 Cart.belongsToMany(Product,{through:CartItem});
 Product.belongsToMany(Cart,{through:CartItem});
+
+/****Order, order Item and User relationship****/
+
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, { through:OrderItem});
 
 sequelize
 //.sync({force:true})
