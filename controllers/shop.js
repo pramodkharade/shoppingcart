@@ -102,10 +102,18 @@ exports.getCart = (req, res, next) => {
 
 exports.postCartDeleteProduct = ((req, res, next) => {
     const prodId = req.body.productId;
-    Product.findById(prodId, (product) => {
-        cart.deleteProduct(prodId, product.price);
-        res.redirect('/cart');
-    });
+    req.user.getCart()
+            .then((cart)=>{
+                return cart.getProducts({where:{id:prodId}});
+            })
+            .then((products)=>{
+                const product = products[0];
+                return product.cartItem. destroy();
+            })
+            .then((result)=>{
+                res.redirect('/cart');
+            })
+            .catch((error)=>{ console.log(error);});
 });
 exports.getCheckout = (req, res, next) => {
     res.render('shop/checkout', {
