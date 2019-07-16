@@ -30,3 +30,9 @@ npm i --save mysql2
 npm i --save sequelize
 
 http://docs.sequelizejs.com/manual/associations.html
+
+
+
+# Install Mongodb
+
+npm i --save mongodb
