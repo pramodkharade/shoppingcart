@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const mongoConnect = require('./utils/database');
 
-// const adminRouter = require('./routes/admin');
+const adminRouter = require('./routes/admin');
 // const shopRoutes = require('./routes/shop');
 
 const app = express();
@@ -25,15 +25,14 @@ app.use((req,res,next)=>{
     //     console.log(error);
     // });
 });
-// app.use('/admin',adminRouter.router);
+app.use('/admin',adminRouter.router);
 // app.use(shopRoutes);
 // app.use((req,res,next)=>{
 //     res.status(404).render('404',{pageTitle:'Page Not found',path:'/'})
 // });
 
 
-mongoConnect((client)=>{
-    console.log(client);
+mongoConnect(()=>{
     app.listen(port,()=>{
         console.log('Server is running on ',port);
     });
