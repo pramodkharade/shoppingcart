@@ -4,7 +4,7 @@ const path = require('path');
 const mongoConnect = require('./utils/database').mongoConnect;
 
 const adminRouter = require('./routes/admin');
-// const shopRoutes = require('./routes/shop');
+const shopRoutes = require('./routes/shop');
 
 const app = express();
 //app.engine('hbs',expressHbs());
@@ -27,10 +27,10 @@ app.use((req,res,next)=>{
     next();
 });
 app.use('/admin',adminRouter.router);
-// app.use(shopRoutes);
-// app.use((req,res,next)=>{
-//     res.status(404).render('404',{pageTitle:'Page Not found',path:'/'})
-// });
+app.use(shopRoutes);
+app.use((req,res,next)=>{
+    res.status(404).render('404',{pageTitle:'Page Not found',path:'/'})
+});
 
 
 mongoConnect(()=>{
