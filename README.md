@@ -36,3 +36,5 @@ http://docs.sequelizejs.com/manual/associations.html
 # Install Mongodb
 
 npm i --save mongodb
+
+https://docs.mongodb.com/manual/crud/

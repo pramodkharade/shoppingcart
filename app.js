@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const mongoConnect = require('./utils/database');
+const mongoConnect = require('./utils/database').mongoConnect;
 
 const adminRouter = require('./routes/admin');
 // const shopRoutes = require('./routes/shop');
@@ -24,6 +24,7 @@ app.use((req,res,next)=>{
     // .catch((error)=>{
     //     console.log(error);
     // });
+    next();
 });
 app.use('/admin',adminRouter.router);
 // app.use(shopRoutes);

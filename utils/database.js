@@ -3,7 +3,7 @@ const mongoClient = mongodb.MongoClient;
 let _db;
 const mongoConnect = (callback)=>{
     mongoClient.connect(
-            'mongodb+srv://username:password@shoppingcart-tmdv2.mongodb.net/dbname?retryWrites=true&w=majority',
+            'mongodb+srv://pramodkharade:Deepika1987@shoppingcart-tmdv2.mongodb.net/shop?retryWrites=true&w=majority',
             
             { useNewUrlParser:true})
            .then((client)=>{
