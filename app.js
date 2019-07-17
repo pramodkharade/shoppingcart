@@ -12,7 +12,7 @@ const app = express();
 app.set('view engine','ejs');
  //app.set('view engine','pug');
 app.set('views','views');
-const port  = process.env.PORT || 4000;
+const port  = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname,'public')));
@@ -20,12 +20,12 @@ app.use((req,res,next)=>{
     User.findById('5d2ec09aaa2efb2689255858')
     .then((user)=>{
         req.user = user;
+        console.log('user Data is: ',req.user);
         next();
     })
     .catch((error)=>{
         console.log(error);
     });
-    next();
 });
 app.use('/admin',adminRouter.router);
 app.use(shopRoutes);

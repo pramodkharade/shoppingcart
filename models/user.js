@@ -17,7 +17,11 @@ class User{
         let db = getDb();
        return db.collection('users').find({_id: new mongodb.ObjectId(userId)})
                               .next()
-                              .then(()=>{})
+                              .then((user)=>{
+                                  
+                                  console.log('User Model::',user);
+                                  return user;
+                              })
                               .catch(error=>{
                                   console.log(error);
                                 });
