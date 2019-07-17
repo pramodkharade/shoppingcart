@@ -5,6 +5,7 @@ const mongoConnect = require('./utils/database').mongoConnect;
 
 const adminRouter = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const User = require('./models/user');
 
 const app = express();
 //app.engine('hbs',expressHbs());
@@ -16,14 +17,14 @@ const port  = process.env.PORT || 4000;
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname,'public')));
 app.use((req,res,next)=>{
-    // User.findByPk(1)
-    // .then((user)=>{
-    //     req.user = user;
-    //     next();
-    // })
-    // .catch((error)=>{
-    //     console.log(error);
-    // });
+    User.findById('5d2ec09aaa2efb2689255858')
+    .then((user)=>{
+        req.user = user;
+        next();
+    })
+    .catch((error)=>{
+        console.log(error);
+    });
     next();
 });
 app.use('/admin',adminRouter.router);
