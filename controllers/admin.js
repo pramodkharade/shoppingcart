@@ -63,7 +63,7 @@ exports.posteditProduct = (req, res, next) => {
                           updatedPrice,
                           updatedDescription,
                           updatedImageUrl,
-                          new mongodb.ObjectId(prodId));
+                          prodId);
   
   product.save()
          .then(()=>{
