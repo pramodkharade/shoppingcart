@@ -44,43 +44,50 @@ exports.getIndex = (req, res, next) => {
         });
 };
 
-// exports.postCart = (req, res, next) => {
-//     const prodId = req.body.productId;
-//     let fetchCart;
-//     let newQuantity = 1;
-//     req.user.getCart()
-//         .then((cart) => {
-//             fetchCart = cart;
-//             return cart.getProducts({ where: { id: prodId } });
-//         })
-//         .then(products => {
-//             let product;
-//             if (products.length > 0) {
-//                 product = products[0];
-//             }
+exports.postCart = (req, res, next) => {
+    const prodId = req.body.productId;
+  Product.findById(prodId)
+    .then(product => {
+      return req.user.addToCart(product);
+    })
+    .then(result => {
+      console.log(result);
+    });
+    //let fetchCart;
+    //let newQuantity = 1;
+    // req.user.getCart()
+    //     .then((cart) => {
+    //         fetchCart = cart;
+    //         return cart.getProducts({ where: { id: prodId } });
+    //     })
+    //     .then(products => {
+    //         let product;
+    //         if (products.length > 0) {
+    //             product = products[0];
+    //         }
 
-//             if (product) {
-//                 /***get existing cart product**/
-//                 const oldQuantity = product.cartItem.quantity;
-//                 newQuantity = oldQuantity + 1;
-//                 return product;
-//             }
-//             /****Return new product from cart**/
-//             return Product.findByPk(prodId);
+    //         if (product) {
+    //             /***get existing cart product**/
+    //             const oldQuantity = product.cartItem.quantity;
+    //             newQuantity = oldQuantity + 1;
+    //             return product;
+    //         }
+    //         /****Return new product from cart**/
+    //         return Product.findByPk(prodId);
 
-//         })
-//         .then(product => {
-//             return fetchCart.addProduct(product, {
-//                 through: { quantity: newQuantity }
-//             });
-//         })
-//         .then(() => {
-//             res.redirect('/cart');
-//         })
-//         .catch((error) => {
-//             console.log(error);
-//         });
-// }
+    //     })
+    //     .then(product => {
+    //         return fetchCart.addProduct(product, {
+    //             through: { quantity: newQuantity }
+    //         });
+    //     })
+    //     .then(() => {
+    //         res.redirect('/cart');
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     });
+}
 // exports.getCart = (req, res, next) => {
 //     req.user.getCart()
 //         .then((cart) => {
