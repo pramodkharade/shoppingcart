@@ -88,24 +88,21 @@ exports.postCart = (req, res, next) => {
     //         console.log(error);
     //     });
 }
-// exports.getCart = (req, res, next) => {
-//     req.user.getCart()
-//         .then((cart) => {
-//             return cart.getProducts()
-//                 .then((cartProducts) => {
-//                     res.render('shop/cart',
-//                         {
-//                             path: '/cart',
-//                             pageTitle: 'Your Cart',
-//                             products: cartProducts
-//                         });
-//                 })
-//                 .catch();
-//         })
-//         .catch((error) => {
-//             console.log('Error is:', error);
-//         });
-// };
+exports.getCart = (req, res, next) => {
+    req.user.getCart()
+        .then((products) => {
+                    res.render('shop/cart',
+                        {
+                            path: '/cart',
+                            pageTitle: 'Your Cart',
+                            products: products
+                        });
+                
+        })
+        .catch((error) => {
+            console.log('Error is:', error);
+        });
+};
 
 // exports.postCartDeleteProduct = ((req, res, next) => {
 //     const prodId = req.body.productId;
