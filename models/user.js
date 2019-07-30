@@ -59,6 +59,18 @@ class User {
                     });
                  });
     }
+    deleteItemsFromCart(productId){
+        const updatedCartItems =  this.cart.items.filter(item =>{
+           return  item.productId.toString() !== productId.toString();
+        });
+        console.log('After Cart Item:',updatedCartItems);
+        const db = getDb();
+        return db.collection('users')
+            .updateOne(
+                { _id: new mongodb.ObjectId(this._id) },
+                { $set: { cart:{items: updatedCartItems} } }
+            );
+    }
     static findById(userId) {
         let db = getDb();
         return db.collection('users').find({ _id: new mongodb.ObjectId(userId) })
