@@ -75,7 +75,7 @@ class User {
         const db = getDb();
         return this.getCart().then(products=>{
             const order  = {
-                items: this.cart.items,
+                items: products,
                 user:{
                     _id: new mongodb.ObjectId(this._id),
                     name: this.name,
@@ -91,6 +91,10 @@ class User {
                         { $set: { cart: { items: [] } } }
                     );
             });
+    }
+    getOrders(){
+        const db = getDb();
+        return db.collection('orders').find({'user._id': new mongodb.ObjectId(this._id)}).toArray();
     }
     static findById(userId) {
         let db = getDb();
