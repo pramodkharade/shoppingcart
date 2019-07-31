@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const path = require('path');
-const mongoConnect = require('./utils/database').mongoConnect;
 
 const adminRouter = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
@@ -33,9 +33,12 @@ app.use((req,res,next)=>{
     res.status(404).render('404',{pageTitle:'Page Not found',path:'/'})
 });
 
-
-mongoConnect(()=>{
+mongoose.connect('mongodb+srv://pramodkharade:password@shoppingcart-tmdv2.mongodb.net/shop?retryWrites=true&w=majority')
+.then(()=>{
     app.listen(port,()=>{
-        console.log('Server is running on ',port);
+        console.log('Server is running on mongoose ',port);
     });
+})
+.catch(error=>{
+    console.log('connection error is: ',error);
 });
