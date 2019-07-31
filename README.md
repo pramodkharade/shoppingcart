@@ -38,3 +38,10 @@ http://docs.sequelizejs.com/manual/associations.html
 npm i --save mongodb
 
 https://docs.mongodb.com/manual/crud/
+
+
+# Install  mongoose
+
+npm i --save mongoose
+
+https://mongoosejs.com/docs/api.html
