@@ -5,7 +5,7 @@ const path = require('path');
 
 const adminRouter = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-// const User = require('./models/user');
+const User = require('./models/user');
 
 const app = express();
 //app.engine('hbs',expressHbs());
@@ -34,7 +34,15 @@ app.use((req,res,next)=>{
 });
 
 mongoose.connect('mongodb://127.0.0.1:27017/shoppingCart',{ useNewUrlParser:true})
-.then(()=>{
+.then((result)=>{
+    const user = new User({
+        name:'Pramod Kharade',
+        email:'kharade.pramod91@gmail.com',
+        cart:{
+            items:[]
+        }
+    });
+    user.save();
     app.listen(port,()=>{
         console.log('Server is running on mongoose ',port);
     });
