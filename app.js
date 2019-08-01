@@ -12,7 +12,7 @@ const app = express();
 app.set('view engine', 'ejs');
 //app.set('view engine','pug');
 app.set('views', 'views');
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
