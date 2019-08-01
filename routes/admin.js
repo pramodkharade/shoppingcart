@@ -7,11 +7,11 @@ const products = [];
 // /admin/add-product =>GET
 router.get('/add-product',adminControllers.getAddProducts);
 // /admin/products => GET
-// router.get('/products',adminControllers.getProducts);
+router.get('/products',adminControllers.getProducts);
 // /admin/add-product =>POST
 router.post('/add-product',adminControllers.postAddProducts);
 
-// router.get('/edit-product/:productId',adminControllers.getEditProduct);
-// router.post('/edit-product',adminControllers.posteditProduct);
+router.get('/edit-product/:productId',adminControllers.getEditProduct);
+router.post('/edit-product',adminControllers.posteditProduct);
 // router.post('/delete-product',adminControllers.postDeleteProduct);
 exports.router = router;
