@@ -5,6 +5,7 @@ const path = require('path');
 
 const adminRouter = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const authRoutes = require('./routes/auth');
 const User = require('./models/user');
 
 const app = express();
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 });
 app.use('/admin', adminRouter.router);
 app.use(shopRoutes);
+app.use(authRoutes);
 app.use((req, res, next) => {
     res.status(404).render('404', { pageTitle: 'Page Not found', path: '/' })
 });
