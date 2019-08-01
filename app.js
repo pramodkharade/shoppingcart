@@ -5,7 +5,7 @@ const path = require('path');
 
 const adminRouter = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-const User = require('./models/user');
+// const User = require('./models/user');
 
 const app = express();
 //app.engine('hbs',expressHbs());
@@ -16,24 +16,24 @@ const port  = process.env.PORT || 4000;
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname,'public')));
-app.use((req,res,next)=>{
-    User.findById('5d3abd4b93ef26434e2c87db')
-    .then((user)=>{
-        req.user = new User(user.name, user.email, user.cart, user._id);
-        console.log('user Data is: ',req.user);
-        next();
-    })
-    .catch((error)=>{
-        console.log(error);
-    });
-});
+// app.use((req,res,next)=>{
+//     User.findById('5d3abd4b93ef26434e2c87db')
+//     .then((user)=>{
+//         req.user = new User(user.name, user.email, user.cart, user._id);
+//         console.log('user Data is: ',req.user);
+//         next();
+//     })
+//     .catch((error)=>{
+//         console.log(error);
+//     });
+// });
 app.use('/admin',adminRouter.router);
 app.use(shopRoutes);
 app.use((req,res,next)=>{
     res.status(404).render('404',{pageTitle:'Page Not found',path:'/'})
 });
 
-mongoose.connect('mongodb+srv://pramodkharade:password@shoppingcart-tmdv2.mongodb.net/shop?retryWrites=true&w=majority')
+mongoose.connect('mongodb://127.0.0.1:27017/shoppingCart',{ useNewUrlParser:true})
 .then(()=>{
     app.listen(port,()=>{
         console.log('Server is running on mongoose ',port);
