@@ -16,7 +16,13 @@ exports.postAddProducts = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product({title:title,price:price,description:description,imageUrl:imageUrl});
+  const product = new Product({
+            title:title,
+            price:price,
+            description:description,
+            imageUrl:imageUrl,
+            userId:req.user
+          });
   product.save()
   .then((result)=>{
     console.log("Created the product");
@@ -75,7 +81,10 @@ Product.findById(prodId).then(product=>{
 };
 exports.getProducts = (req, res, next) => {
   Product.find()
+  // .select('title imageUrl') // to get specific values from main model
+  //.populate('userId','name') // to get reference  model specific values
   .then((products) => {
+    console.log("PROD::",products);
     res.render('admin/products',
     {
       prods: products,
