@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/pramodkharade/shoppingcart#readme",
   "dependencies": {
+    "@types/connect-mongodb-session": "0.0.0",
     "@types/ejs": "^2.6.3",
     "@types/express-handlebars": "0.0.32",
     "@types/express-session": "^1.15.13",
@@ -24,6 +25,7 @@
     "@types/pug": "^2.0.4",
     "@types/sequelize": "github:types/sequelize",
     "body-parser": "^1.19.0",
+    "connect-mongodb-session": "^2.2.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",

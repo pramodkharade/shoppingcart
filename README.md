@@ -50,3 +50,9 @@ https://mongoosejs.com/docs/api.html
 # Install expression-session to manage  the session
 
 npm i --save express-session
+
+# To store session in mongodb
+
+npm i --save connect-mongodb-session
+
+https://github.com/mongodb-js/connect-mongodb-session
