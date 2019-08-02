@@ -45,3 +45,8 @@ https://docs.mongodb.com/manual/crud/
 npm i --save mongoose
 
 https://mongoosejs.com/docs/api.html
+
+
+# Install expression-session to manage  the session
+
+npm i --save express-session

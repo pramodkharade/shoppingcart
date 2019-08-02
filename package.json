@@ -19,6 +19,7 @@
   "dependencies": {
     "@types/ejs": "^2.6.3",
     "@types/express-handlebars": "0.0.32",
+    "@types/express-session": "^1.15.13",
     "@types/mongoose": "^5.5.11",
     "@types/pug": "^2.0.4",
     "@types/sequelize": "github:types/sequelize",
@@ -26,6 +27,7 @@
     "ejs": "^2.6.2",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
+    "express-session": "^1.16.2",
     "mongodb": "^3.2.7",
     "mongoose": "^5.6.7",
     "mysql2": "^1.6.5",
