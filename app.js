@@ -29,17 +29,9 @@ app.use(session({
      saveUninitialized:false,
     store:store
     }));
-app.use((req, res, next) => {
-    User.findById('5d43e9bce57b8c22a009ee41')
-        .then((user) => {
-            req.user = user
-            console.log('user Data is: ', req.user);
-            next();
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-});
+//app.use((req, res, next) => {
+    
+//});
 app.use('/admin', adminRouter.router);
 app.use(shopRoutes);
 app.use(authRoutes);
