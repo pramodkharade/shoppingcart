@@ -75,3 +75,6 @@ npm i --save connect-flash
 # Send the email library
 
 npm i --save nodemailer nodemailer-sendgrid-transport
+
+https://sendgrid.com/docs/
+https://nodemailer.com/about/
