@@ -7,7 +7,8 @@ exports.getlogin = (req, res, next) => {
   res.render('auth/login', {
     path: "/login",
     pageTitle: 'Login',
-    isAuthenticated: false
+    isAuthenticated: false,
+    csrfToken: req.csrfToken()
   });
 };
 
@@ -20,14 +21,14 @@ exports.postlogin = (req, res, next) => {
     .then(user => {
       return bcrypt.compare(password, user.password)
         .then((doMatch) => {
-            if(doMatch){
-                req.session.isLoggedIn = true;
-                req.session.user = user;
-               return  req.session.save((error) => {
-                  res.redirect('/');
-                });
-            }
-            res.redirect('/login');
+          if (doMatch) {
+            req.session.isLoggedIn = true;
+            req.session.user = user;
+            return req.session.save((error) => {
+              res.redirect('/');
+            });
+          }
+          res.redirect('/login');
         })
         .catch(error => {
           console.log(error);

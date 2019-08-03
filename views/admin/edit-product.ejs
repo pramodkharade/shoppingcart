@@ -12,6 +12,7 @@
                 <label for="title">Title</label>
                 <input type="text" name="title" id="title" value="<% if(editing) { %><%=product.title%> <% }%>">
             </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="form-control">
                     <label for="imageUrl">Image Url</label>
                     <input type="text" name="imageUrl" id="imageUrl" value="<% if(editing) { %><%=product.imageUrl%> <% }%>">
