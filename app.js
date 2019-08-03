@@ -30,7 +30,7 @@ app.use(session({
     store:store
     }));
 app.use((req, res, next) => {
-    if(!req.session.user._id){
+    if(!req.session.user){
        return  next();
     }
     User.findById(req.session.user._id)
