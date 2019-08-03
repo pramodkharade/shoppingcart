@@ -8,7 +8,8 @@ exports.getlogin = (req, res, next) => {
     path: "/login",
     pageTitle: 'Login',
     isAuthenticated: false,
-    csrfToken: req.csrfToken()
+    csrfToken: req.csrfToken(),
+    errorMessage: req.flash('error')
   });
 };
 
@@ -16,11 +17,20 @@ exports.postlogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   User.findOne({
-    email: email
+    email: email,
+    
   })
     .then(user => {
+        if(!user){
+            req.flash('error','invalid email or password.');
+            return res.redirect('/login');
+        }
       return bcrypt.compare(password, user.password)
         .then((doMatch) => {
+            if(!doMatch){
+                req.flash('error','invalid email or password.');
+                return res.redirect('/login');
+            }
           if (doMatch) {
             req.session.isLoggedIn = true;
             req.session.user = user;
