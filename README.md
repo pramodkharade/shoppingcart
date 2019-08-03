@@ -71,3 +71,7 @@ https://www.acunetix.com/websitesecurity/csrf-attacks/
 # To show and error message and push it temporary in session and remove them.
 
 npm i --save connect-flash
+
+# Send the email library
+
+npm i --save nodemailer nodemailer-sendgrid-transport
