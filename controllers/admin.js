@@ -2,9 +2,7 @@ const mongodb = require('mongodb');
 const Product = require('../models/product');
 const ObjectID = mongodb.ObjectId();
 exports.getAddProducts = (req, res, next) => {
-  if(!req.session.isLoggedIn){
-    return res.redirect('/login');
-  }
+  
   res.render(
     'admin/edit-product',
     {
@@ -85,9 +83,7 @@ Product.findById(prodId).then(product=>{
          });
 };
 exports.getProducts = (req, res, next) => {
-  if(!req.session.isLoggedIn){
-    return res.redirect('/login');
-  }
+
   Product.find()
   // .select('title imageUrl') // to get specific values from main model
   //.populate('userId','name') // to get reference  model specific values
