@@ -60,3 +60,7 @@ https://github.com/mongodb-js/connect-mongodb-session
 # Password Encryption  Library
 
 npm i --save bcryptjs
+
+# Cross site Request Forgery to prevent session to got stolen
+
+npm i --save csurf
