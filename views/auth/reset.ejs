@@ -1,0 +1,22 @@
+<%- include('../includes/header.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+        <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if(errorMessage){ %>
+        <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
+        <form class="login-form" action="/login" method="POST">
+            <div class="form-control">
+                <label for="title">E-mail</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit">Reset Password</button>
+        </form>
+    </main>
+    <%- include('../includes/footer.ejs') %>
