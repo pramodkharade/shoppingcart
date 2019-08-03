@@ -1,16 +1,19 @@
 <%- include('../includes/header.ejs') %>
-    <link rel="stylesheet" href="/css/forms.css">
-    <link rel="stylesheet" href="/css/auth.css">
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/auth.css">
 </head>
 
 <body>
-        <%- include('../includes/navigation.ejs') %>
+    <%- include('../includes/navigation.ejs') %>
     <main>
+        <% if(errorMessage){ %>
+        <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
         <form class="login-form" action="/signup" method="POST">
             <div class="form-control">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" id="name">
-                </div>
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name">
+            </div>
             <div class="form-control">
                 <label for="email">E-Mail</label>
                 <input type="email" name="email" id="email">
