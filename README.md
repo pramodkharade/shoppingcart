@@ -60,10 +60,13 @@ https://github.com/mongodb-js/connect-mongodb-session
 # Password Encryption  Library
 
 npm i --save bcryptjs
+https://github.com/dcodeIO/bcrypt.js
 
 # Cross site Request Forgery to prevent session to got stolen
 
 npm i --save csurf
+
+https://www.acunetix.com/websitesecurity/csrf-attacks/
 
 # To show and error message and push it temporary in session and remove them.
 

@@ -77,7 +77,7 @@ exports.postSignup = (req, res, next) => {
   })
     .then(userDoc => {
       if (userDoc) {
-        req.flash('error','E-mail already exists. Please pick different');
+        req.flash('error','E-mail already exists. Please pick different one');
         return res.redirect('/signup');
       }
       return bcrypt.hash(password, 12)
