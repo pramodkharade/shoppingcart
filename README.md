@@ -56,3 +56,7 @@ npm i --save express-session
 npm i --save connect-mongodb-session
 
 https://github.com/mongodb-js/connect-mongodb-session
+
+# Password Encryption  Library
+
+npm i --save bcryptjs
