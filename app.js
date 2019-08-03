@@ -49,19 +49,6 @@ app.use((req, res, next) => {
 
 mongoose.connect(MONGOURI, { useNewUrlParser: true })
     .then((result) => {
-        User.findOne().then(user => {
-            if (!user) {
-                const user = new User({
-                    name: 'Pramod Kharade',
-                    email: 'kharade.pramod91@gmail.com',
-                    cart: {
-                        items: []
-                    }
-                });
-                user.save();
-            }
-        });
-
         app.listen(port, () => {
             console.log('Server is running on mongoose ', port);
         });
