@@ -8,7 +8,7 @@ const User = require('../models/user');
         sendgridTransport({
           auth: {
             api_key:
-            'Your key'
+            'your sendgrid key'
           }
         })
       );
@@ -147,20 +147,24 @@ exports.getReset = (req,res,next)=>{
       });
 };
 exports.postReset = (req,res,next)=>{
+    const email = req.body.email;
     crypto.randomBytes(32,(err,buffer)=>{
         if(err){
             console.log(err);
            return res.redirect('/reset');
         }
         const token =buffer.toString('hex');
-        User.findOne({email:email})
+        User.findOne({
+            email: email,
+            
+          })
             .then(user=>{
                 if(!user){
                     req.flash('error','No account found with this '+email);
                     return res.redirect('/reset');
                 }
                 user.resetToken = token;
-                user.resetTokenExpiration = new Date.now() + 3600000;
+                user.resetTokenExpiration =  Date.now() + 3600000;
                 return user.save();
                 
             })
