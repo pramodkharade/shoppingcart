@@ -64,3 +64,7 @@ npm i --save bcryptjs
 # Cross site Request Forgery to prevent session to got stolen
 
 npm i --save csurf
+
+# To show and error message and push it temporary in session and remove them.
+
+npm i --save connect-flash
