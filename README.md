@@ -77,4 +77,11 @@ npm i --save connect-flash
 npm i --save nodemailer nodemailer-sendgrid-transport
 
 https://sendgrid.com/docs/
+
 https://nodemailer.com/about/
+
+# Validation at Server side:
+
+npm install --save express-validator
+
+https://express-validator.github.io/docs/
