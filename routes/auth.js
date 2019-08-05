@@ -8,7 +8,17 @@ router.post('/login',authController.postlogin);
 router.get('/signup', authController.getSignup);
 router.get('/reset', authController.getReset);
 router.post('/reset', authController.postReset);
-router.post('/signup', check('email').isEmail().withMessage('Please enter a valid email'), authController.postSignup);
+router.post('/signup', 
+    check('email')
+    .isEmail()
+    .withMessage('Please enter a valid email')
+    .custom((value,{req})=>{
+        if(value==='test@test.com'){
+            throw Error('This email is forbidden.')
+        }
+        return true;
+    }),
+     authController.postSignup);
 router.post('/logout',authController.postlogout);
 router.get('/reset/:token',authController.getNewPassword);
 router.post('/new-password',authController.postNewPassword);
