@@ -36,7 +36,7 @@ exports.postlogin = (req, res, next) => {
   const password = req.body.password;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.render('auth/login', {
+    return res.status(422).render('auth/login', {
       path: '/login',
       pageTitle: 'Login',
       errorMessage: errors.array()[0].msg
@@ -84,13 +84,18 @@ exports.getSignup = (req, res, next) => {
     path: '/signup',
     pageTitle: 'Signup',
     isAuthenticated: false,
-    errorMessage: message
+    errorMessage: message,
+    oldInputs:{
+      name:'',
+      email:'',
+      password:'',
+      confirmPassword: ''
+    }
   });
 };
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword;
   const name = req.body.name;
   const errors = validationResult(req);
   if(!errors.isEmpty()){
@@ -99,7 +104,13 @@ exports.postSignup = (req, res, next) => {
       path: '/signup',
       pageTitle: 'Signup',
       isAuthenticated: false,
-      errorMessage: errors.array()[0].msg
+      errorMessage: errors.array()[0].msg,
+      oldInputs:{
+        email:email,
+        password:password,
+        name:name,
+        confirmPassword: req.body.confirmPassword
+      }
     });
   }
    bcrypt.hash(password, 12)

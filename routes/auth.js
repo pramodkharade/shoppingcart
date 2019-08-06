@@ -44,7 +44,8 @@ router.post('/signup',
     .isLength({ min: 5 })
     .isAlphanumeric(),
     body('confirmPassword').custom((value,{req})=>{
-        if(value!== req.password){
+        console.log('CPassword::',value," Password:",req.body.password);
+        if(value!== req.body.password){
             throw Error('Password must have to match!')
         }
         return true;
