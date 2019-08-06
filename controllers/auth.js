@@ -27,7 +27,12 @@ exports.getlogin = (req, res, next) => {
     pageTitle: 'Login',
     isAuthenticated: false,
     csrfToken: req.csrfToken(),
-    errorMessage: msg
+    errorMessage: msg,
+    oldInputs:{
+      email:'',
+      password:''
+    },
+    validationErrors:[]
   });
 };
 
@@ -39,7 +44,12 @@ exports.postlogin = (req, res, next) => {
     return res.status(422).render('auth/login', {
       path: '/login',
       pageTitle: 'Login',
-      errorMessage: errors.array()[0].msg
+      errorMessage: errors.array()[0].msg,
+      oldInputs:{
+        email:email,
+        password:password
+      },
+      validationErrors: errors.array()
     });
   }
   User.findOne({
@@ -48,14 +58,34 @@ exports.postlogin = (req, res, next) => {
   })
     .then(user => {
       if (!user) {
-        req.flash('error', 'invalid email or password.');
-        return res.redirect('/login');
+        return  res.status(422).render('auth/login', {
+          path: "/login",
+          pageTitle: 'Login',
+          isAuthenticated: false,
+          csrfToken: req.csrfToken(),
+          errorMessage: 'invalid email or password',
+          oldInputs:{
+            email:'',
+            password:''
+          },
+          validationErrors:[]
+        });
       }
       return bcrypt.compare(password, user.password)
         .then((doMatch) => {
           if (!doMatch) {
-            req.flash('error', 'invalid email or password.');
-            return res.redirect('/login');
+           return  res.status(422).render('auth/login', {
+              path: "/login",
+              pageTitle: 'Login',
+              isAuthenticated: false,
+              csrfToken: req.csrfToken(),
+              errorMessage: 'invalid email or password',
+              oldInputs:{
+                email:'',
+                password:''
+              },
+              validationErrors:[]
+            });
           }
           if (doMatch) {
             req.session.isLoggedIn = true;
