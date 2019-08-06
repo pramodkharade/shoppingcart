@@ -11,9 +11,10 @@ router.post('/login',
 [
     body('email')
       .isEmail()
-      .withMessage('Please enter a valid email address.'),
+      .withMessage('Please enter a valid email address.')
+      .normalizeEmail(),
     body('password', 'Password has to be valid.')
-      .isLength({ min: 5 })
+      .isLength({ min: 5 }).trim()
   ],
 authController.postlogin
 );
@@ -23,6 +24,7 @@ router.post('/reset', authController.postReset);
 router.post('/signup', 
    [ check('email')
     .isEmail()
+    .normalizeEmail()
     .withMessage('Please enter a valid email')
     .custom((value,{req})=>{
         // if(value==='test@test.com'){
@@ -42,8 +44,10 @@ router.post('/signup',
          'Please enter a password with number with text and atleast 5 lenght'
          )
     .isLength({ min: 5 })
-    .isAlphanumeric(),
-    body('confirmPassword').custom((value,{req})=>{
+    .isAlphanumeric().trim(),
+    body('confirmPassword')
+    .trim()
+    .custom((value,{req})=>{
         console.log('CPassword::',value," Password:",req.body.password);
         if(value!== req.body.password){
             throw Error('Password must have to match!')
