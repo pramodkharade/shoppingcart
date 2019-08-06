@@ -90,7 +90,8 @@ exports.getSignup = (req, res, next) => {
       email:'',
       password:'',
       confirmPassword: ''
-    }
+    },
+    validationErrors:[]
   });
 };
 exports.postSignup = (req, res, next) => {
@@ -110,7 +111,8 @@ exports.postSignup = (req, res, next) => {
         password:password,
         name:name,
         confirmPassword: req.body.confirmPassword
-      }
+      },
+      validationErrors:errors.array()
     });
   }
    bcrypt.hash(password, 12)
