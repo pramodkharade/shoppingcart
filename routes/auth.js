@@ -22,7 +22,13 @@ router.post('/signup',
          'Please enter a password with number with text and atleast 5 lenght'
          )
     .isLength({ min: 5 })
-    .isAlphanumeric()
+    .isAlphanumeric(),
+    body('confirmPassword').custom((value,{req})=>{
+        if(value!== req.password){
+            throw Error('Password must have to match!')
+        }
+        return true;
+    }),
 ],
      authController.postSignup);
 router.post('/logout',authController.postlogout);
