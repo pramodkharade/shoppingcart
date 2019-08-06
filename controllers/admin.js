@@ -1,4 +1,5 @@
 const mongodb = require('mongodb');
+const {validationResult } = require('express-validator/check');
 const Product = require('../models/product');
 const ObjectID = mongodb.ObjectId();
 exports.getAddProducts = (req, res, next) => {
@@ -9,6 +10,7 @@ exports.getAddProducts = (req, res, next) => {
       pageTitle: 'Add Product',
       path: '/admin/add-product',
       editing: false,
+      errorMessage:null,
       isAuthenticated: req.session.isLoggedIn
     });
 };
@@ -18,6 +20,24 @@ exports.postAddProducts = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+   return res.status(422).render(
+      'admin/edit-product',
+      {
+        pageTitle: 'Add Product',
+        path: '/admin/add-product',
+        editing: false,
+        product: {
+          title:title,
+          price:price,
+          imageUrl:imageUrl,
+          description:description
+        },
+        errorMessage: errors.array()[0].msg,
+        isAuthenticated: req.session.isLoggedIn
+      });
+  }
   const product = new Product({
             title:title,
             price:price,
