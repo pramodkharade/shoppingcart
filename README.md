@@ -91,3 +91,7 @@ npm install --save express-validator
     Validator.js (which is used behind the scenes) Docs:
     
      https://github.com/chriso/validator.js
+
+# Process the file upload request
+
+npm i --save multer
