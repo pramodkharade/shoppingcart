@@ -25,7 +25,15 @@ app.set('views', 'views');
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({dest:'images'}).single('image'));
+const fileStorage = multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,'images');
+    },
+    filename:(req,file,cb)=>{
+        cb(null,new Date().getTime()+file.originalname);
+    }
+});
+app.use(multer({storage: fileStorage}).single('image'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret:'thisisthenodeapplication',
@@ -45,6 +53,7 @@ app.use(session({
         .catch(err => console.log(err));  
     });
 app.use(csrfProcection);
+
 app.use((req,res,next)=>{
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.csrfToken = req.csrfToken();

@@ -14,7 +14,6 @@ router.get('/products',isAuth, adminControllers.getProducts);
 router.post('/add-product',
             [
                 body('title').isString().isLength({ min: 3 }).trim().withMessage('Please provide title '),
-                body('imageUrl').isURL().withMessage('Please provide image path '),
                 body('price').isFloat().withMessage('Please provide price '),
                 body('description').isLength({ min: 5 ,max:400 }).trim().withMessage('Please provide description ')
                 
@@ -27,7 +26,6 @@ router.get('/edit-product/:productId',isAuth, adminControllers.getEditProduct);
 router.post('/edit-product',
             [
                 body('title').isString().isLength({ min: 3 }).trim().withMessage('Please provide title '),
-                body('imageUrl').isURL().withMessage('Please provide image path '),
                 body('price').isFloat().withMessage('Please provide price '),
                 body('description').isLength({ min: 5 ,max:400 }).trim().withMessage('Please provide description ')
                 
