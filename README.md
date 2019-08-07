@@ -84,4 +84,10 @@ https://nodemailer.com/about/
 
 npm install --save express-validator
 
-https://express-validator.github.io/docs/
+    Express-Validator Docs:
+    
+     https://express-validator.github.io/docs/
+
+    Validator.js (which is used behind the scenes) Docs:
+    
+     https://github.com/chriso/validator.js
