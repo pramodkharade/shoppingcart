@@ -5,7 +5,7 @@ const Order = require('../models/order');
 //const cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
-    
+
     Product.find()
         .then((products) => {
             res.render('shop/product-list',
@@ -35,7 +35,7 @@ exports.getProduct = (req, res, next) => {
 
 }
 
-exports.getIndex = (req, res, next) => {    
+exports.getIndex = (req, res, next) => {
     Product.find()
         .then(products => {
             res.render('shop/index', {
@@ -48,31 +48,31 @@ exports.getIndex = (req, res, next) => {
             console.log(err);
         });
 };
- 
+
 exports.postCart = (req, res, next) => {
-    const prodId = req.body.productId; console.log('User Session',req.user);
+    const prodId = req.body.productId; console.log('User Session', req.user);
     Product.findById(prodId)
-      .then(product => {
-        return req.user.addToCart(product);
-      })
-      .then(result => {
-        console.log(result);
-        res.redirect('/cart');
-      });
-  };
+        .then(product => {
+            return req.user.addToCart(product);
+        })
+        .then(result => {
+            console.log(result);
+            res.redirect('/cart');
+        });
+};
 exports.getCart = (req, res, next) => {
     req.user.populate('cart.items.productId')
         .execPopulate()
         .then((user) => {
             const products = user.cart.items;
-                    res.render('shop/cart',
-                        {
-                            path: '/cart',
-                            pageTitle: 'Your Cart',
-                            products: products,
-                            isAuthenticated: req.session.isLoggedIn
-                        });
-                
+            res.render('shop/cart',
+                {
+                    path: '/cart',
+                    pageTitle: 'Your Cart',
+                    products: products,
+                    isAuthenticated: req.session.isLoggedIn
+                });
+
         })
         .catch((error) => {
             console.log('Error is:', error);
@@ -91,22 +91,22 @@ exports.postCartDeleteProduct = ((req, res, next) => {
 exports.postOrder = (req, res, next) => {
     req.user.populate('cart.items.productId')
         .execPopulate()
-        .then(user=>{
+        .then(user => {
             const products = user.cart.items.map(i => {
                 return { quantity: i.quantity, product: { ...i.productId._doc } };
-              });
-              const order = new Order({
+            });
+            const order = new Order({
                 user: {
-                  name: req.user.name,
-                  userId: req.user
+                    name: req.user.name,
+                    userId: req.user
                 },
                 products: products
-              });
-              return order.save();
+            });
+            return order.save();
         })
         .then((result) => {
             return req.user.clearCart();
-        }).then(()=>{
+        }).then(() => {
             res.redirect('/orders');
         })
         .catch((error) => {
@@ -115,7 +115,7 @@ exports.postOrder = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-    Order.find({'user.userId':req.user._id})
+    Order.find({ 'user.userId': req.user._id })
         .then((orders) => {
             res.render('shop/orders', {
                 path: "/orders",
@@ -129,19 +129,31 @@ exports.getOrders = (req, res, next) => {
         });
 
 };
-exports.getInvoice = (req,res,next) =>{
+exports.getInvoice = (req, res, next) => {
     const orderId = req.params.orderId;
-    const invoiceName = 'invoice'+ orderId + '.pdf';
-    const invoicePath = path.join('data','invoices',invoiceName);
-    fs.readFile(invoicePath,(error,data)=>{
-        if(error){
-            return next(error);
+    Order.findById(orderId).then((order) => {
+        if (!order) {
+            return next(Error('No order found'));
         }
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader(
-          'Content-Disposition',
-          'inline; filename="' + invoiceName + '"'
-        );
-        res.send(data);
-    });
+        if(order.user.userId.toString() !== req.user._id.toString()){
+            return next(Error('Unauthorized user'));
+        }
+        const invoiceName = 'invoice' + orderId + '.pdf';
+        const invoicePath = path.join('data', 'invoices', invoiceName);
+        fs.readFile(invoicePath, (error, data) => {
+            if (error) {
+                return next(error);
+            }
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader(
+                'Content-Disposition',
+                'inline; filename="' + invoiceName + '"'
+            );
+            res.send(data);
+        });
+    })
+        .catch(error => {
+            return next(error);
+        });
+   
 };
