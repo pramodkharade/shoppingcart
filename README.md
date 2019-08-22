@@ -95,3 +95,7 @@ npm install --save express-validator
 # Process the file upload request
 
 npm i --save multer
+
+# PDF generation library
+
+npm i pdfkit
