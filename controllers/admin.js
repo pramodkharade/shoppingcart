@@ -1,6 +1,7 @@
 const mongodb = require('mongodb');
 const {validationResult } = require('express-validator');
 const Product = require('../models/product');
+const fileHelper = require('../utils/file');
 const ObjectID = mongodb.ObjectId();
 exports.getAddProducts = (req, res, next) => {
   
@@ -133,6 +134,7 @@ Product.findById(prodId).then(product=>{
   product.title = updatedTitle;
   product.price = updatedPrice;
   if(image){
+    fileHelper.deleteFile(product.imageUrl);
     product.imageUrl = image.path;
   }
   product.description = updatedDescription;
@@ -167,12 +169,19 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req,res,next)=>{
   const prodId = req.body.productId;
-  Product.deleteOne({_id:prodId,userId:req.user._id}).then(()=>{
+  Product.findById(prodId).then(product=>{
+    if(!product){
+       return next(new Error('Product not found'));
+    }
+    fileHelper.deleteFile(product.imageUrl);
+    return Product.deleteOne({_id:prodId,userId:req.user._id});
+  }).then(()=>{
     console.log('Product deleted');
     res.redirect('/admin/products');
   })
   .catch((error)=>{
       console.log(error);
   });
+  
 }
 
