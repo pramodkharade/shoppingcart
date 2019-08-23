@@ -99,3 +99,9 @@ npm i --save multer
 # PDF generation library
 
 npm i pdfkit
+
+# Stripe Payment gateway integration
+
+npm install stripe --save
+
+Stripe.js Docs: https://stripe.com/docs

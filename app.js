@@ -10,7 +10,10 @@ const multer = require('multer');
 const adminRouter = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
+const shopController = require('./controllers/shop');
+const isAuth = require('./middleware/is-auth');
 const User = require('./models/user');
+
 const MONGOURI ='mongodb://127.0.0.1:27017/shoppingCart';
 const app = express();
 const store = new mongodbStore({
@@ -60,8 +63,8 @@ app.use(session({
         })
         .catch(err => console.log(err));  
     });
+    app.post('/create-order', isAuth, shopController.postOrder);
 app.use(csrfProcection);
-
 app.use((req,res,next)=>{
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.csrfToken = req.csrfToken();

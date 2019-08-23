@@ -3,6 +3,7 @@ const path = require('path');
 const PDFDocument = require('pdfkit');
 const Product = require('../models/product');
 const Order = require('../models/order');
+const stripe = require('stripe')('your secret key');
 //const cart = require('../models/cart');
 const ITEM_PER_PAGE = 2;
 exports.getProducts = (req, res, next) => {
@@ -141,9 +142,15 @@ exports.getCheckout = (req,res,next)=>{
         });
 };
 exports.postOrder = (req, res, next) => {
+    const token = req.body.stripeToken; // Using Express
+  let totalSum = 0;
     req.user.populate('cart.items.productId')
         .execPopulate()
         .then(user => {
+            user.cart.items.forEach(p => {
+                totalSum += p.quantity * p.productId.price;
+              });
+        
             const products = user.cart.items.map(i => {
                 return { quantity: i.quantity, product: { ...i.productId._doc } };
             });
@@ -157,6 +164,13 @@ exports.postOrder = (req, res, next) => {
             return order.save();
         })
         .then((result) => {
+            const charge = stripe.charges.create({
+                amount: totalSum * 100,
+                currency: 'usd',
+                description: 'Demo Order',
+                source: token,
+                metadata: { order_id: result._id.toString() }
+              });
             return req.user.clearCart();
         }).then(() => {
             res.redirect('/orders');
