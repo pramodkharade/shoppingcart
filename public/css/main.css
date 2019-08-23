@@ -245,6 +245,21 @@ form {
   border: 1px solid #e45977;
   color: red;
 }
+.pagination {
+  text-align: center;
+  margin-top: 2rem;
+}
+.pagination a:hover,.pagination a:active{
+  background: #00695c;
+  color: #fff;
+}
+.pagination a {
+  text-decoration: none;
+  color: #00695c;
+  padding: 0 0.5rem;
+  margin: 0 1rem;
+  border: 1px solid #00695c;
+}
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;
