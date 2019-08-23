@@ -1,9 +1,9 @@
 <%- include('../includes/header.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
+<link rel="stylesheet" href="/css/product.css">
 </head>
 
 <body>
-        <%- include('../includes/navigation.ejs') %>
+    <%- include('../includes/navigation.ejs') %>
 
     <main>
         <% if(prods.length > 0){%>
@@ -21,17 +21,17 @@
                     <p class="product__description"><%= product.description %></p>
                 </div>
                 <div class="card__actions">
-                        <a href="/products/<%= product._id %>" class="btn">Details</a>
-                        <% if(isAuthenticated){ %>
-                        <%- include('../includes/add-to-cart.ejs',{product:product}) %>
-                        <% } %>
+                    <a href="/products/<%= product._id %>" class="btn">Details</a>
+                    <% if(isAuthenticated){ %>
+                    <%- include('../includes/add-to-cart.ejs',{product:product}) %>
+                    <% } %>
                 </div>
             </article>
             <% }); %>
         </div>
         <%- include('../includes/pagination.ejs',{currentPage:currentPage,hasNextPage:hasNextPage,hasPreviousPage:hasPreviousPage,nextPage:nextPage,previousPage:previousPage,lastPage:lastPage}) %>
         <% }else{ %>
-            <h1>No Products</h1>
-            <% } %>
+        <h1>No Products</h1>
+        <% } %>
     </main>
     <%- include('../includes/footer.ejs') %>
