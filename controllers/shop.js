@@ -38,14 +38,24 @@ exports.getProduct = (req, res, next) => {
 
 exports.getIndex = (req, res, next) => {
     const page = req.query.page;
-    Product.find()
-        .skip((page-1) * ITEM_PER_PAGE)
-        .limit(ITEM_PER_PAGE)
-        .then(products => {
+    let totalItems;
+    Product.find().count()
+        .then(numberProducts => {
+            totalItems = numberProducts;
+            return Product.find()
+                .skip((page - 1) * ITEM_PER_PAGE)
+                .limit(ITEM_PER_PAGE);
+        }).then(products => {
             res.render('shop/index', {
                 prods: products,
                 pageTitle: 'Shop',
                 path: '/',
+                totalProducts: totalItems,
+                hasNextPage: ITEM_PER_PAGE * page < totalItems,
+                hasPreviousPage: page > 1,
+                nextPage: page + 1,
+                previousPage: page -1 ,
+                lastPage: Math.ceil(totalItems/ITEM_PER_PAGE)
             });
         })
         .catch(err => {
@@ -139,7 +149,7 @@ exports.getInvoice = (req, res, next) => {
         if (!order) {
             return next(Error('No order found'));
         }
-        if(order.user.userId.toString() !== req.user._id.toString()){
+        if (order.user.userId.toString() !== req.user._id.toString()) {
             return next(Error('Unauthorized user'));
         }
         const invoiceName = 'invoice' + orderId + '.pdf';
@@ -152,27 +162,27 @@ exports.getInvoice = (req, res, next) => {
         );
         pdfDoc.pipe(fs.createWriteStream(invoicePath));
         pdfDoc.pipe(res);
-        pdfDoc.fontSize(26).text("Invoice",{
-            underline:true,
-            align:'center'
+        pdfDoc.fontSize(26).text("Invoice", {
+            underline: true,
+            align: 'center'
         });
-        pdfDoc.text('----------------------------------',{
-            align:'center'
+        pdfDoc.text('----------------------------------', {
+            align: 'center'
         });
         let totalPrice = 0;
-        order.products.forEach(prod=>{
+        order.products.forEach(prod => {
             totalPrice += prod.quantity * prod.product.price;
             pdfDoc.fontSize(14).text(
-                prod.product.title+
+                prod.product.title +
                 " - "
-                +prod.quantity
-                +' X '
-                +' $ '+
+                + prod.quantity
+                + ' X '
+                + ' $ ' +
                 prod.product.price
-                );
+            );
         });
         pdfDoc.text('===============================');
-        pdfDoc.fontSize(18).text('Total Price: $ '+totalPrice);
+        pdfDoc.fontSize(18).text('Total Price: $ ' + totalPrice);
         pdfDoc.end();
         // fs.readFile(invoicePath, (error, data) => {
         //     if (error) {
@@ -186,12 +196,12 @@ exports.getInvoice = (req, res, next) => {
         //     res.send(data);
         // });
         // const file  = fs.createReadStream(invoicePath);
-       
+
         //     file.pipe(res); 
 
     })
         .catch(error => {
             return next(error);
         });
-   
+
 };
