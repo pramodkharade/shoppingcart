@@ -116,6 +116,30 @@ exports.postCartDeleteProduct = ((req, res, next) => {
         })
         .catch((error) => { console.log(error); });
 });
+exports.getCheckout = (req,res,next)=>{
+    
+    req.user.populate('cart.items.productId')
+        .execPopulate()
+        .then((user) => {
+            let total=0;
+            const products = user.cart.items;
+            products.forEach(p=>{
+                total += p.quantity * p.productId.price;
+            });
+            res.render('shop/checkout',
+                {
+                    path: '/checkout',
+                    pageTitle: 'Checkout',
+                    products: products,
+                    isAuthenticated: req.session.isLoggedIn,
+                    totalSum: total
+                });
+
+        })
+        .catch((error) => {
+            console.log('Error is:', error);
+        });
+};
 exports.postOrder = (req, res, next) => {
     req.user.populate('cart.items.productId')
         .execPopulate()
