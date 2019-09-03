@@ -105,3 +105,6 @@ npm i pdfkit
 npm install stripe --save
 
 Stripe.js Docs: https://stripe.com/docs
+
+# To Secure the Header:
+npm i helmet --save
