@@ -111,3 +111,6 @@ npm i helmet --save
 
 # To compression the assets
 npm i compression --save
+
+# To maintain the access log:
+npm i morgan --save
