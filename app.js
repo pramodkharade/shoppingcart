@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const compression  = require('compression');
+const helmet = require('helmet');
 const path = require('path');
 const session = require('express-session');
 const mongodbStore = require('connect-mongodb-session')(session);
@@ -74,6 +76,10 @@ app.use(flash());
 app.use('/admin', adminRouter.router);
 app.use(shopRoutes);
 app.use(authRoutes);
+// secured the all request headers
+app.use(helmet())
+// compress all responses
+app.use(compression());
 app.use((req, res, next) => {
     res.status(404).render('404', { pageTitle: 'Page Not found', path: '/' })
 });
