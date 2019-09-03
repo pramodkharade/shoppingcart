@@ -108,3 +108,6 @@ Stripe.js Docs: https://stripe.com/docs
 
 # To Secure the Header:
 npm i helmet --save
+
+# To compression the assets
+npm i compression --save
